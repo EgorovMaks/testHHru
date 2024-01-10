@@ -28,11 +28,18 @@ function generateRandomArray(
 
 
 function serializeArray(array) {
-  return array.join(",");
+  const uint8Array = new Uint8Array(array);
+  const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
+  return base64String;
 }
 
 function deserializeString(serializedString) {
-  return serializedString.split(",").map(Number);
+  const decodedString = atob(serializedString);
+  const uint8Array = new Uint8Array(decodedString.length);
+  for (let i = 0; i < decodedString.length; i++) {
+    uint8Array[i] = decodedString.charCodeAt(i);
+  }
+  return Array.from(uint8Array);
 }
 
 function calculateCompressionRatio(originalLength, compressedLength) {
