@@ -1,9 +1,6 @@
 import { arrTests, generateRandomArray } from "./components/creatingArray.js";
 import { deserializeString, serializeArray } from "./components/serialize.js";
 
-
-
-
 function calculateCompressionRatio(originalLength, compressedLength) {
   return (
     (((originalLength - compressedLength) / originalLength) * 100).toFixed(2) +
@@ -19,10 +16,11 @@ arrTests.forEach((e) => {
     e.useNumDigits
   );
   console.log(
-    "==========================================================================================",
+    "%c==========================================================================================",
+    "color: red;",
     e
   );
-  
+
   console.log("Исходный массив:", myArray);
 
   let serializedString = serializeArray(myArray);
@@ -39,6 +37,7 @@ arrTests.forEach((e) => {
   console.log("%cКоэффициент сжатия: " + compressionRatio, "color: green;");
 
   console.log(
-    "=========================================================================================="
+    "%c==========================================================================================",
+    "color: red;"
   );
 });
