@@ -62,7 +62,7 @@ const arrTests = [
   { totalLength: 1000, numDigits: 1, repetitions: 1, useNumDigits: true },
   { totalLength: 1000, numDigits: 2, repetitions: 1, useNumDigits: true },
   { totalLength: 1000, numDigits: 3, repetitions: 1, useNumDigits: true },
-  { totalLength: 900, numDigits: 1, repetitions: 3, useNumDigits: true },
+  { totalLength: 900, numDigits: 1, repetitions: 3, useNumDigits: false },
 ];
 
 arrTests.forEach((e) => {
