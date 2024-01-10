@@ -1,66 +1,15 @@
-function generateRandomArray(
-  totalLength,
-  numDigits,
-  repetitions,
-  useNumDigits = true
-) {
-  if (totalLength % repetitions !== 0) {
-    console.error(
-      "Количество элементов массива должно быть кратным количеству повторений."
-    );
-    return [];
-  }
-  let array = [];
-  const uniqueNumbers = totalLength / repetitions;
-  for (let i = 0; i < uniqueNumbers; i++) {
-    let randomNumber;
-    if (useNumDigits) {
-      randomNumber = Math.floor(Math.random() * Math.pow(10, numDigits)) + 1;
-    } else {
-      randomNumber = Math.floor(Math.random() * 1000) + 1; // Пример генерации чисел без учета количества знаков (можно изменить по желанию)
-    }
-    for (let j = 0; j < repetitions; j++) {
-      array.push(randomNumber);
-    }
-  }
-  return array;
-}
+import { arrTests, generateRandomArray } from "./components/creatingArray.js";
+import { deserializeString, serializeArray } from "./components/serialize.js";
 
 
-function serializeArray(array) {
-  const uint8Array = new Uint8Array(array);
-  const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
-  return base64String;
-}
 
-function deserializeString(serializedString) {
-  const decodedString = atob(serializedString);
-  const uint8Array = new Uint8Array(decodedString.length);
-  for (let i = 0; i < decodedString.length; i++) {
-    uint8Array[i] = decodedString.charCodeAt(i);
-  }
-  return Array.from(uint8Array);
-}
 
 function calculateCompressionRatio(originalLength, compressedLength) {
-  return (originalLength - compressedLength) / originalLength;
+  return (
+    (((originalLength - compressedLength) / originalLength) * 100).toFixed(2) +
+    "%"
+  );
 }
-
-const arrTests = [
-  { totalLength: 50, numDigits: 1, repetitions: 1, useNumDigits: true },
-  { totalLength: 50, numDigits: 2, repetitions: 1, useNumDigits: true },
-  { totalLength: 50, numDigits: 3, repetitions: 1, useNumDigits: true },
-  { totalLength: 100, numDigits: 1, repetitions: 1, useNumDigits: true },
-  { totalLength: 100, numDigits: 2, repetitions: 1, useNumDigits: true },
-  { totalLength: 100, numDigits: 3, repetitions: 1, useNumDigits: true },
-  { totalLength: 500, numDigits: 1, repetitions: 1, useNumDigits: true },
-  { totalLength: 500, numDigits: 2, repetitions: 1, useNumDigits: true },
-  { totalLength: 500, numDigits: 3, repetitions: 1, useNumDigits: true },
-  { totalLength: 1000, numDigits: 1, repetitions: 1, useNumDigits: true },
-  { totalLength: 1000, numDigits: 2, repetitions: 1, useNumDigits: true },
-  { totalLength: 1000, numDigits: 3, repetitions: 1, useNumDigits: true },
-  { totalLength: 900, numDigits: 1, repetitions: 3, useNumDigits: false },
-];
 
 arrTests.forEach((e) => {
   let myArray = generateRandomArray(
@@ -73,6 +22,7 @@ arrTests.forEach((e) => {
     "==========================================================================================",
     e
   );
+  
   console.log("Исходный массив:", myArray);
 
   let serializedString = serializeArray(myArray);
@@ -85,7 +35,8 @@ arrTests.forEach((e) => {
     myArray.length * 3,
     serializedString.length
   );
-  console.log("Коэффициент сжатия:", compressionRatio);
+
+  console.log("%cКоэффициент сжатия: " + compressionRatio, "color: green;");
 
   console.log(
     "=========================================================================================="
