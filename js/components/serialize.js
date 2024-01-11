@@ -1,14 +1,14 @@
+
+
 export function serializeArray(array) {
-  const uint8Array = new Uint8Array(array);
-  const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
-  return base64String;
+  // Преобразование массива в строку и сжатие данных
+  const compressedString = LZString.compressToBase64(JSON.stringify(array));
+  return compressedString;
 }
 
 export function deserializeString(serializedString) {
-  const decodedString = atob(serializedString);
-  const uint8Array = new Uint8Array(decodedString.length);
-  for (let i = 0; i < decodedString.length; i++) {
-    uint8Array[i] = decodedString.charCodeAt(i);
-  }
-  return Array.from(uint8Array);
+  // Распаковка и преобразование строки в массив
+  const decompressedString = LZString.decompressFromBase64(serializedString);
+  const array = JSON.parse(decompressedString);
+  return array;
 }
