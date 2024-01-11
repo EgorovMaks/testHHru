@@ -10,19 +10,29 @@ export function generateRandomArray(
     );
     return [];
   }
+
   let array = [];
   const uniqueNumbers = totalLength / repetitions;
+
   for (let i = 0; i < uniqueNumbers; i++) {
     let randomNumber;
+
     if (useNumDigits) {
-      randomNumber = Math.floor(Math.random() * Math.pow(10, numDigits)) + 1;
+      // Generate a random number with exactly numDigits
+      const min = Math.pow(10, numDigits - 1);
+      const max = Math.pow(10, numDigits) - 1;
+      randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
     } else {
-      randomNumber = Math.floor(Math.random() * 1000) + 1; // Пример генерации чисел без учета количества знаков (можно изменить по желанию)
+      // Generate a random number without considering the number of digits
+      randomNumber = Math.floor(Math.random() * 1000) + 1;
     }
+
+    // Repeat the generated number as per the repetitions parameter
     for (let j = 0; j < repetitions; j++) {
       array.push(randomNumber);
     }
   }
+
   return array;
 }
 
