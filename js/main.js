@@ -13,7 +13,7 @@ arrTests.forEach((e) => {
     e.totalLength,
     e.numDigits,
     e.repetitions,
-    e.useNumDigits
+    e.useNumDigits 
   );
   console.log(
     "%c==========================================================================================",
